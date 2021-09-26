@@ -1,13 +1,17 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DayNightController : MonoBehaviour
 {
 
     public Light sun;
 
-    public GameObject[] lightCount;
+    ///public GameObject[] lightCount;
     //public GameObject used to store all the Spotlights;
+
+    public System.Collections.Generic.List<GameObject> StreetLightList = new System.Collections.Generic.List<GameObject>();
+
 
     public float secondsInFullDay = 120f;
     [Range(0, 1)]
@@ -26,8 +30,8 @@ public class DayNightController : MonoBehaviour
     }
 
     void Update()
-    {
-        lightCount = GameObject.FindGameObjectsWithTag("StreetLight"); //use this tag with each of your StreetLights and make a spotlight its child.
+    {   
+        StreetLightList.Add() =GameObject.FindGameObjectsWithTag("StreetLight"); //use this tag with each of your StreetLights and make a spotlight its child.
 
         UpdateSun();
         
@@ -52,7 +56,7 @@ public class DayNightController : MonoBehaviour
         {
             intensityMultiplier = 0;
 
-            foreach(GameObject i in lightCount)
+            foreach(GameObject i in StreetLightList)
             {   
                 i.GetComponentInChildren<Light>().enabled = true;
             }
@@ -63,18 +67,25 @@ public class DayNightController : MonoBehaviour
         {
             intensityMultiplier = Mathf.Clamp01((currentTimeOfDay - 0.23f) * (1 / 0.02f));
 
-            foreach(GameObject i in lightCount)
+            foreach(GameObject i in StreetLightList)
             {   
-                i.GetComponentInChildren<Light>().enabled = false;
+                if(currentTimeOfDay>0.23f )
+                {
+                    i.GetComponentInChildren<Light>().enabled = false;
+                }
+                
             }
         }
         else if (currentTimeOfDay >= 0.73f)
         {
             intensityMultiplier = Mathf.Clamp01(1 - ((currentTimeOfDay - 0.73f) * (1 / 0.02f)));
             
-            foreach(GameObject i in lightCount)
+            foreach(GameObject i in StreetLightList)
             {   
-                i.GetComponentInChildren<Light>().enabled = false;
+                if(currentTimeOfDay<0.75f)
+                {
+                    i.GetComponentInChildren<Light>().enabled = false;
+                }
             }
         }
 
