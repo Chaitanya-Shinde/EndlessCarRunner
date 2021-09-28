@@ -9,6 +9,7 @@ public class DayNightController : MonoBehaviour
 
     ///public GameObject[] lightCount;
     //public GameObject used to store all the Spotlights;
+    public GameObject[] streetLightCount;
 
     public System.Collections.Generic.List<GameObject> StreetLightList = new System.Collections.Generic.List<GameObject>();
 
@@ -31,7 +32,9 @@ public class DayNightController : MonoBehaviour
 
     void Update()
     {   
-        StreetLightList.Add() =GameObject.FindGameObjectsWithTag("StreetLight"); //use this tag with each of your StreetLights and make a spotlight its child.
+        streetLightCount = GameObject.FindGameObjectsWithTag("StreetLight"); //use this tag with each of your StreetLights and make a spotlight its child.
+        StreetLightList.AddRange(streetLightCount);
+    
 
         UpdateSun();
         
